@@ -1,0 +1,28 @@
+pkgname=dnsproxy
+pkgver=0.42.2
+pkgrel=1
+pkgdesc="Simple DNS proxy with DoH, DoT, DoQ and DNSCrypt support"
+arch=(x86_64)
+url=https://github.com/AdguardTeam/dnsproxy
+license=(Apache)
+makedepends=(git go)
+backup=(etc/dnsproxy/config.yaml)
+source=(
+    $pkgname-$pkgver.tar.gz::$url/archive/v$pkgver.tar.gz
+    dnsproxy@.service
+)
+sha512sums=(
+    94d341a35cd4a7b9591d84e152c5177b7f38860baf1b308adbe85d5949c9ca97bbf8c32345343522bde0c6ab92be203b14a0d969d28f20a155ae21dc49abc08b
+    740dd39e26ea48b8238d82dd8d1b3bf0e56a06fd36e3b363ab045a7503a22fd5332c0a4e1469f28cabacafac2c10c4d9b756f2017d3ac973dcf124fb17526c12
+)
+
+build() {
+    cd $pkgname-$pkgver
+    go build
+}
+
+package() {
+    install -Dm755 "$pkgname-$pkgver/dnsproxy" "${pkgdir}/usr/bin/dnsproxy"
+    install -Dm644 dnsproxy@.service "${pkgdir}/usr/lib/systemd/system/dnsproxy.service"
+    install -Dm644 "$pkgname-$pkgver/config.yaml.dist" "${pkgdir}/etc/dnsproxy/config.yaml" 
+}
