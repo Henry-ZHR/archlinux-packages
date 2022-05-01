@@ -18,11 +18,11 @@ sha512sums=(
 
 build() {
     cd $pkgname-$pkgver
-    go build
+    make VERSION=$pkgver build
 }
 
 package() {
     install -Dm755 "$pkgname-$pkgver/dnsproxy" "${pkgdir}/usr/bin/dnsproxy"
-    install -Dm644 dnsproxy@.service "${pkgdir}/usr/lib/systemd/system/dnsproxy.service"
+    install -Dm644 dnsproxy@.service "${pkgdir}/usr/lib/systemd/system/dnsproxy@.service"
     install -Dm644 "$pkgname-$pkgver/config.yaml.dist" "${pkgdir}/etc/dnsproxy/config.yaml" 
 }
