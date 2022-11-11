@@ -32,6 +32,7 @@ depends=('python-basicsr'
          'python-kornia'
          'python-lark-parser'
          'python-inflection'
+         'python-gitpython'
          'python-clip')
 # font-roboto
 # GitPython
